@@ -2,12 +2,14 @@
 #include <locale.h>
 #include <stdlib.h>
 
+float calcularValorBase(float km);
+
 int main() {
 
     system("chcp 65001 > nul");
 	setlocale(LC_ALL, "Portuguese");
 
-    float km, kg;
+    float km, kg, valorBase, subtotalInicial ;
     int modalidade,servico,tentativa;
 
     printf("=== MENU PRINCIPAL ===\n");
@@ -18,6 +20,12 @@ int main() {
         printf("Valor invalido. Informe uma distancia maior que 0: ");
         scanf("%f", &km);
     }
+
+    valorBase = calcularValorBase(km);
+    subtotalInicial = valorBase + (km*1.2);
+
+    printf("Valor base: R$ %.2f\n", valorBase);
+    printf("Subtotal inicial: R$ %.2f\n", subtotalInicial);
 
     printf("informe peso em quilos\n");
     scanf("%f", &kg);
@@ -55,6 +63,24 @@ int main() {
         printf("Valor invalido. Informe 0 ou mais tentativas: ");
         scanf("%d", &tentativa);
     }
+    
+	return 0;
+}
+
+float calcularValorBase(float km) {
+    if (km <= 5) {
+        return 8.00;
+    }
+    else if (km <= 15) {
+        return 12.00;
+    }
+    else if (km <= 30) {
+        return 18.00;
+    }
+    else {
+        return 25.00;
+    }
+}
 	
 	return 0;
 }
