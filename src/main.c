@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 float calcularValorBase(float km);
-float calcularPeso(float kg, float valorBase);
-float calcularModalidade(int modalidade, float valorBase);
+float calcularPeso(float kg, float subtotalInicial);
+float calcularModalidade(int modalidade, float subtotalInicial);
 float calcularProtecao(int servico);
 float calcularTentativas(int tentativa);
 
@@ -15,6 +15,8 @@ int main() {
 
     float km, kg, subtotalInicial, valorBase;
     float adicionalPeso, adicionalModalidade, adicionalProtecao, adicionalTentativas;
+    float valorFinal;
+
     int modalidade, servico, tentativa;
 
     printf("=== MENU PRINCIPAL ===\n");
@@ -28,7 +30,7 @@ int main() {
     }
 
     valorBase = calcularValorBase(km);
-    subtotalInicial = valorBase + (km * 1.2);
+    subtotalInicial = valorBase + (km * 1.20);
 
     printf("Valor base: R$ %.2f\n", valorBase);
     printf("Subtotal inicial: R$ %.2f\n", subtotalInicial);
@@ -41,7 +43,7 @@ int main() {
         scanf("%f", &kg);
     }
 
-    adicionalPeso = calcularPeso(kg, valorBase);
+    adicionalPeso = calcularPeso(kg, subtotalInicial);
 
     printf("Adicional do peso: R$ %.2f\n", adicionalPeso);
 
@@ -56,7 +58,7 @@ int main() {
         scanf("%d", &modalidade);
     }
 
-    adicionalModalidade = calcularModalidade(modalidade, valorBase);
+    adicionalModalidade = calcularModalidade(modalidade, subtotalInicial);
 
     printf("Adicional de modalidade: R$ %.2f\n", adicionalModalidade);
 
@@ -86,8 +88,18 @@ int main() {
 
     printf("Adicional de tentativas: R$ %.2f\n", adicionalTentativas);
 
+    /* Cálculo final */
+    valorFinal = subtotalInicial
+               + adicionalPeso
+               + adicionalModalidade
+               + adicionalProtecao
+               + adicionalTentativas;
+
+    printf("\nValor final da entrega: R$ %.2f\n", valorFinal);
+
     return 0;
 }
+
 
 float calcularValorBase(float km) {
 
@@ -105,46 +117,50 @@ float calcularValorBase(float km) {
     }
 }
 
-float calcularPeso(float kg, float valorBase) {
+
+float calcularPeso(float kg, float subtotalInicial) {
 
     if (kg <= 2) {
-        return 0;
+        return subtotalInicial * 0.00;
     }
     else if (kg <= 5) {
-        return valorBase * 0.05;
+        return subtotalInicial * 0.05;
     }
     else if (kg <= 10) {
-        return valorBase * 0.10;
+        return subtotalInicial * 0.10;
     }
     else {
-        return valorBase * 0.20;
+        return subtotalInicial * 0.20;
     }
 }
 
-float calcularModalidade(int modalidade, float valorBase) {
+
+float calcularModalidade(int modalidade, float subtotalInicial) {
 
     if (modalidade == 1) {
-        return 0;
+        return subtotalInicial * 0.00;
     }
     else if (modalidade == 2) {
-        return valorBase * 0.15;
+        return subtotalInicial * 0.15;
     }
     else {
-        return valorBase * 0.30;
+        return subtotalInicial * 0.30;
     }
 }
+
 
 float calcularProtecao(int servico) {
 
     if (servico == 1) {
-        return 10.00;
+        return 7.50;
     }
     else {
-        return 0;
+        return 0.00;
     }
 }
 
+
 float calcularTentativas(int tentativa) {
 
-    return tentativa * 5.00;
+    return tentativa * 4.00;
 }
