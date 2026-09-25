@@ -20,11 +20,21 @@ int main() {
     int modalidade, servico, tentativa;
     int continuar;
 
+    int totalEntregas = 0;
+    int qtdEconomica = 0;
+    int qtdExpressa = 0;
+    int qtdPrioritaria = 0;
+
+    float totalSessao = 0;
+    float mediaEntrega;
+    float maiorEntrega = 0;
+    float menorEntrega = 0;
+
     do {
 
-         printf("=== MENU PRINCIPAL ===\n");
+        printf("\n=== MENU PRINCIPAL ===\n");
 
-        printf("\nInforme distância em quilômetros: ");
+        printf("Informe distância em quilômetros: ");
         scanf("%f", &km);
 
         while (km <= 0) {
@@ -91,7 +101,6 @@ int main() {
 
         printf("Adicional de tentativas: R$ %.2f\n", adicionalTentativas);
 
-        
         valorFinal = subtotalInicial
                    + adicionalPeso
                    + adicionalModalidade
@@ -99,8 +108,31 @@ int main() {
                    + adicionalTentativas;
 
         printf("\nValor final da entrega: R$ %.2f\n", valorFinal);
+ 
+        totalEntregas++;
+        totalSessao += valorFinal;
 
-        
+        if (modalidade == 1) {
+            qtdEconomica++;
+        } else if (modalidade == 2) {
+            qtdExpressa++;
+        } else {
+            qtdPrioritaria++;
+        }
+
+        if (totalEntregas == 1) {
+            maiorEntrega = valorFinal;
+            menorEntrega = valorFinal;
+        } else {
+            if (valorFinal > maiorEntrega) {
+                maiorEntrega = valorFinal;
+            }
+
+            if (valorFinal < menorEntrega) {
+                menorEntrega = valorFinal;
+            }
+        }
+
         printf("\nDeseja processar outra entrega?\n");
         printf("1 - Sim\n");
         printf("0 - Não\n");
@@ -112,6 +144,24 @@ int main() {
         }
 
     } while (continuar == 1);
+
+    
+    mediaEntrega = totalSessao / totalEntregas;
+
+    
+    printf("\n========== RESUMO DA SESSÃO ==========\n");
+
+    printf("Total de entregas: %d\n", totalEntregas);
+    printf("Valor total da sessão: R$ %.2f\n", totalSessao);
+    printf("Valor médio por entrega: R$ %.2f\n", mediaEntrega);
+
+    printf("\nEntregas por modalidade:\n");
+    printf("Econômica: %d\n", qtdEconomica);
+    printf("Expressa: %d\n", qtdExpressa);
+    printf("Prioritária: %d\n", qtdPrioritaria);
+
+    printf("\nMaior valor de entrega: R$ %.2f\n", maiorEntrega);
+    printf("Menor valor de entrega: R$ %.2f\n", menorEntrega);
 
     printf("\nSessão encerrada.\n");
 
