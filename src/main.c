@@ -3,18 +3,17 @@
 #include <stdlib.h>
 
 float calcularValorBase(float km);
-float calcularPeso(float kg);
-float calcularModalidade(int modalidade);
+float calcularPeso(float kg, float valorBase);
+float calcularModalidade(int modalidade, float valorBase);
 float calcularProtecao(int servico);
-
-float valorBase;
 
 int main() {
 
     system("chcp 65001 > nul");
     setlocale(LC_ALL, "Portuguese");
 
-    float km, kg, subtotalInicial, adicionalPeso, adicionalModalidade, adicionalProtecao;
+    float km, kg, subtotalInicial, valorBase;
+    float adicionalPeso, adicionalModalidade, adicionalProtecao;
     int modalidade, servico, tentativa;
 
     printf("=== MENU PRINCIPAL ===\n");
@@ -41,7 +40,7 @@ int main() {
         scanf("%f", &kg);
     }
 
-    adicionalPeso = calcularPeso(kg);
+    adicionalPeso = calcularPeso(kg, valorBase);
 
     printf("Adicional do peso: R$ %.2f\n", adicionalPeso);
 
@@ -56,7 +55,7 @@ int main() {
         scanf("%d", &modalidade);
     }
 
-    adicionalModalidade = calcularModalidade(modalidade);
+    adicionalModalidade = calcularModalidade(modalidade, valorBase);
 
     printf("Adicional de modalidade: R$ %.2f\n", adicionalModalidade);
 
@@ -101,7 +100,7 @@ float calcularValorBase(float km) {
     }
 }
 
-float calcularPeso(float kg) {
+float calcularPeso(float kg, float valorBase) {
 
     if (kg <= 2) {
         return 0;
@@ -117,16 +116,17 @@ float calcularPeso(float kg) {
     }
 }
 
-float calcularModalidade(int modalidade){
-    if (modalidade == 1){
+float calcularModalidade(int modalidade, float valorBase) {
+
+    if (modalidade == 1) {
         return 0;
     }
-    else if(modalidade == 2){
-        return (valorBase*0.15);
-    }else{
-        return (valorBase*0.30);
+    else if (modalidade == 2) {
+        return valorBase * 0.15;
     }
-
+    else {
+        return valorBase * 0.30;
+    }
 }
 
 float calcularProtecao(int servico) {
