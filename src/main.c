@@ -6,6 +6,7 @@ float calcularValorBase(float km);
 float calcularPeso(float kg, float valorBase);
 float calcularModalidade(int modalidade, float valorBase);
 float calcularProtecao(int servico);
+float calcularTentativas(int tentativa);
 
 int main() {
 
@@ -13,7 +14,7 @@ int main() {
     setlocale(LC_ALL, "Portuguese");
 
     float km, kg, subtotalInicial, valorBase;
-    float adicionalPeso, adicionalModalidade, adicionalProtecao;
+    float adicionalPeso, adicionalModalidade, adicionalProtecao, adicionalTentativas;
     int modalidade, servico, tentativa;
 
     printf("=== MENU PRINCIPAL ===\n");
@@ -81,6 +82,10 @@ int main() {
         scanf("%d", &tentativa);
     }
 
+    adicionalTentativas = calcularTentativas(tentativa);
+
+    printf("Adicional de tentativas: R$ %.2f\n", adicionalTentativas);
+
     return 0;
 }
 
@@ -137,4 +142,9 @@ float calcularProtecao(int servico) {
     else {
         return 0;
     }
+}
+
+float calcularTentativas(int tentativa) {
+
+    return tentativa * 5.00;
 }
