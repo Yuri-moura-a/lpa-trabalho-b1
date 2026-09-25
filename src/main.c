@@ -3,71 +3,80 @@
 #include <stdlib.h>
 
 float calcularValorBase(float km);
+float calcularPeso(float kg);
+
+float valorBase;
 
 int main() {
 
     system("chcp 65001 > nul");
-	setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "Portuguese");
 
-    float km, kg, valorBase, subtotalInicial ;
-    int modalidade,servico,tentativa;
+    float km, kg, subtotalInicial, adicionalPeso;
+    int modalidade, servico, tentativa;
 
     printf("=== MENU PRINCIPAL ===\n");
-    printf("informe distância em quilômetros\n");
+
+    printf("Informe distância em quilômetros: ");
     scanf("%f", &km);
 
     while (km <= 0) {
-        printf("Valor invalido. Informe uma distancia maior que 0: ");
+        printf("Valor inválido. Informe uma distância maior que 0: ");
         scanf("%f", &km);
     }
 
     valorBase = calcularValorBase(km);
-    subtotalInicial = valorBase + (km*1.2);
+    subtotalInicial = valorBase + (km * 1.2);
 
     printf("Valor base: R$ %.2f\n", valorBase);
     printf("Subtotal inicial: R$ %.2f\n", subtotalInicial);
 
-    printf("informe peso em quilos\n");
+    printf("\nInforme peso em quilos: ");
     scanf("%f", &kg);
 
     while (kg <= 0) {
-        printf("Valor invalido. Informe um peso maior que 0: ");
+        printf("Valor inválido. Informe um peso maior que 0: ");
         scanf("%f", &kg);
     }
 
-    printf("informe modalidade\n");
-    printf("1-Econômica ");
-    printf("2-Expressa  ");
-    printf("3-Prioritária ");
+    adicionalPeso = calcularPeso(kg);
+
+    printf("Adicional do peso: R$ %.2f\n", adicionalPeso);
+
+    printf("\nInforme modalidade:\n");
+    printf("1 - Econômica\n");
+    printf("2 - Expressa\n");
+    printf("3 - Prioritária\n");
     scanf("%d", &modalidade);
 
     while (modalidade < 1 || modalidade > 3) {
-        printf("Modalidade invalida. Informe 1, 2 ou 3: ");
+        printf("Modalidade inválida. Informe 1, 2 ou 3: ");
         scanf("%d", &modalidade);
     }
 
-    printf("informe se deseja adicianor serviço adicional de proteção\n");
-    printf("1-sim");
-    printf("0-nao");
+    printf("\nInforme se deseja adicionar serviço adicional de proteção:\n");
+    printf("1 - Sim\n");
+    printf("0 - Não\n");
     scanf("%d", &servico);
 
     while (servico != 0 && servico != 1) {
-        printf("Opcao invalida. Informe 1 para sim ou 0 para nao: ");
+        printf("Opção inválida. Informe 1 para sim ou 0 para não: ");
         scanf("%d", &servico);
     }
 
-    printf("informe a quantidade de tentativa de entrega adicionais\n");
+    printf("\nInforme a quantidade de tentativas de entrega adicionais: ");
     scanf("%d", &tentativa);
-    
+
     while (tentativa < 0) {
-        printf("Valor invalido. Informe 0 ou mais tentativas: ");
+        printf("Valor inválido. Informe 0 ou mais tentativas: ");
         scanf("%d", &tentativa);
     }
-    
-	return 0;
+
+    return 0;
 }
 
 float calcularValorBase(float km) {
+
     if (km <= 5) {
         return 8.00;
     }
@@ -81,6 +90,19 @@ float calcularValorBase(float km) {
         return 25.00;
     }
 }
-	
-	return 0;
+
+float calcularPeso(float kg) {
+
+    if (kg <= 2) {
+        return 0;
+    }
+    else if (kg <= 5) {
+        return valorBase * 0.05;
+    }
+    else if (kg <= 10) {
+        return valorBase * 0.10;
+    }
+    else {
+        return valorBase * 0.20;
+    }
 }
