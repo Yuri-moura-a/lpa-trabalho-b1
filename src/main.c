@@ -5,6 +5,7 @@
 float calcularValorBase(float km);
 float calcularPeso(float kg);
 float calcularModalidade(int modalidade);
+float calcularProtecao(int servico);
 
 float valorBase;
 
@@ -13,7 +14,7 @@ int main() {
     system("chcp 65001 > nul");
     setlocale(LC_ALL, "Portuguese");
 
-    float km, kg, subtotalInicial, adicionalPeso, adicionalModalidade;
+    float km, kg, subtotalInicial, adicionalPeso, adicionalModalidade, adicionalProtecao;
     int modalidade, servico, tentativa;
 
     printf("=== MENU PRINCIPAL ===\n");
@@ -69,6 +70,10 @@ int main() {
         scanf("%d", &servico);
     }
 
+    adicionalProtecao = calcularProtecao(servico);
+
+    printf("Adicional de proteção: R$ %.2f\n", adicionalProtecao);
+
     printf("\nInforme a quantidade de tentativas de entrega adicionais: ");
     scanf("%d", &tentativa);
 
@@ -122,5 +127,14 @@ float calcularModalidade(int modalidade){
         return (valorBase*0.30);
     }
 
+}
 
+float calcularProtecao(int servico) {
+
+    if (servico == 1) {
+        return 10.00;
+    }
+    else {
+        return 0;
+    }
 }
