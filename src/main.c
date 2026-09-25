@@ -18,149 +18,144 @@ int main() {
     float valorFinal;
 
     int modalidade, servico, tentativa;
+    int continuar;
 
-    printf("=== MENU PRINCIPAL ===\n");
+    do {
 
-    printf("Informe distância em quilômetros: ");
-    scanf("%f", &km);
+         printf("=== MENU PRINCIPAL ===\n");
 
-    while (km <= 0) {
-        printf("Valor inválido. Informe uma distância maior que 0: ");
+        printf("\nInforme distância em quilômetros: ");
         scanf("%f", &km);
-    }
 
-    valorBase = calcularValorBase(km);
-    subtotalInicial = valorBase + (km * 1.20);
+        while (km <= 0) {
+            printf("Valor inválido. Informe uma distância maior que 0: ");
+            scanf("%f", &km);
+        }
 
-    printf("Valor base: R$ %.2f\n", valorBase);
-    printf("Subtotal inicial: R$ %.2f\n", subtotalInicial);
+        valorBase = calcularValorBase(km);
+        subtotalInicial = valorBase + (km * 1.20);
 
-    printf("\nInforme peso em quilos: ");
-    scanf("%f", &kg);
+        printf("Valor base: R$ %.2f\n", valorBase);
+        printf("Subtotal inicial: R$ %.2f\n", subtotalInicial);
 
-    while (kg <= 0) {
-        printf("Valor inválido. Informe um peso maior que 0: ");
+        printf("\nInforme peso em quilos: ");
         scanf("%f", &kg);
-    }
 
-    adicionalPeso = calcularPeso(kg, subtotalInicial);
+        while (kg <= 0) {
+            printf("Valor inválido. Informe um peso maior que 0: ");
+            scanf("%f", &kg);
+        }
 
-    printf("Adicional do peso: R$ %.2f\n", adicionalPeso);
+        adicionalPeso = calcularPeso(kg, subtotalInicial);
 
-    printf("\nInforme modalidade:\n");
-    printf("1 - Econômica\n");
-    printf("2 - Expressa\n");
-    printf("3 - Prioritária\n");
-    scanf("%d", &modalidade);
+        printf("Adicional do peso: R$ %.2f\n", adicionalPeso);
 
-    while (modalidade < 1 || modalidade > 3) {
-        printf("Modalidade inválida. Informe 1, 2 ou 3: ");
+        printf("\nInforme modalidade:\n");
+        printf("1 - Econômica\n");
+        printf("2 - Expressa\n");
+        printf("3 - Prioritária\n");
         scanf("%d", &modalidade);
-    }
 
-    adicionalModalidade = calcularModalidade(modalidade, subtotalInicial);
+        while (modalidade < 1 || modalidade > 3) {
+            printf("Modalidade inválida. Informe 1, 2 ou 3: ");
+            scanf("%d", &modalidade);
+        }
 
-    printf("Adicional de modalidade: R$ %.2f\n", adicionalModalidade);
+        adicionalModalidade = calcularModalidade(modalidade, subtotalInicial);
 
-    printf("\nInforme se deseja adicionar serviço adicional de proteção:\n");
-    printf("1 - Sim\n");
-    printf("0 - Não\n");
-    scanf("%d", &servico);
+        printf("Adicional de modalidade: R$ %.2f\n", adicionalModalidade);
 
-    while (servico != 0 && servico != 1) {
-        printf("Opção inválida. Informe 1 para sim ou 0 para não: ");
+        printf("\nInforme se deseja adicionar serviço adicional de proteção:\n");
+        printf("1 - Sim\n");
+        printf("0 - Não\n");
         scanf("%d", &servico);
-    }
 
-    adicionalProtecao = calcularProtecao(servico);
+        while (servico != 0 && servico != 1) {
+            printf("Opção inválida. Informe 1 para sim ou 0 para não: ");
+            scanf("%d", &servico);
+        }
 
-    printf("Adicional de proteção: R$ %.2f\n", adicionalProtecao);
+        adicionalProtecao = calcularProtecao(servico);
 
-    printf("\nInforme a quantidade de tentativas de entrega adicionais: ");
-    scanf("%d", &tentativa);
+        printf("Adicional de proteção: R$ %.2f\n", adicionalProtecao);
 
-    while (tentativa < 0) {
-        printf("Valor inválido. Informe 0 ou mais tentativas: ");
+        printf("\nInforme a quantidade de tentativas de entrega adicionais: ");
         scanf("%d", &tentativa);
-    }
 
-    adicionalTentativas = calcularTentativas(tentativa);
+        while (tentativa < 0) {
+            printf("Valor inválido. Informe 0 ou mais tentativas: ");
+            scanf("%d", &tentativa);
+        }
 
-    printf("Adicional de tentativas: R$ %.2f\n", adicionalTentativas);
+        adicionalTentativas = calcularTentativas(tentativa);
 
-    /* Cálculo final */
-    valorFinal = subtotalInicial
-               + adicionalPeso
-               + adicionalModalidade
-               + adicionalProtecao
-               + adicionalTentativas;
+        printf("Adicional de tentativas: R$ %.2f\n", adicionalTentativas);
 
-    printf("\nValor final da entrega: R$ %.2f\n", valorFinal);
+        
+        valorFinal = subtotalInicial
+                   + adicionalPeso
+                   + adicionalModalidade
+                   + adicionalProtecao
+                   + adicionalTentativas;
+
+        printf("\nValor final da entrega: R$ %.2f\n", valorFinal);
+
+        
+        printf("\nDeseja processar outra entrega?\n");
+        printf("1 - Sim\n");
+        printf("0 - Não\n");
+        scanf("%d", &continuar);
+
+        while (continuar != 0 && continuar != 1) {
+            printf("Opção inválida. Informe 1 para sim ou 0 para não: ");
+            scanf("%d", &continuar);
+        }
+
+    } while (continuar == 1);
+
+    printf("\nSessão encerrada.\n");
 
     return 0;
 }
 
-
 float calcularValorBase(float km) {
-
-    if (km <= 5) {
+    if (km <= 5)
         return 8.00;
-    }
-    else if (km <= 15) {
+    else if (km <= 15)
         return 12.00;
-    }
-    else if (km <= 30) {
+    else if (km <= 30)
         return 18.00;
-    }
-    else {
+    else
         return 25.00;
-    }
 }
-
 
 float calcularPeso(float kg, float subtotalInicial) {
-
-    if (kg <= 2) {
+    if (kg <= 2)
         return subtotalInicial * 0.00;
-    }
-    else if (kg <= 5) {
+    else if (kg <= 5)
         return subtotalInicial * 0.05;
-    }
-    else if (kg <= 10) {
+    else if (kg <= 10)
         return subtotalInicial * 0.10;
-    }
-    else {
+    else
         return subtotalInicial * 0.20;
-    }
 }
-
 
 float calcularModalidade(int modalidade, float subtotalInicial) {
-
-    if (modalidade == 1) {
+    if (modalidade == 1)
         return subtotalInicial * 0.00;
-    }
-    else if (modalidade == 2) {
+    else if (modalidade == 2)
         return subtotalInicial * 0.15;
-    }
-    else {
+    else
         return subtotalInicial * 0.30;
-    }
 }
-
 
 float calcularProtecao(int servico) {
-
-    if (servico == 1) {
+    if (servico == 1)
         return 7.50;
-    }
-    else {
+    else
         return 0.00;
-    }
 }
 
-
 float calcularTentativas(int tentativa) {
-
     return tentativa * 4.00;
 }
